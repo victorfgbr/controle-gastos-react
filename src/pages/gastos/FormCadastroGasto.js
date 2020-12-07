@@ -39,7 +39,7 @@ const FormCadastroGasto = ({ refreshTableGastos }) => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    api.post('/gasto', JSON.stringify(gasto), {
+    api.post('/gastos', JSON.stringify(gasto), {
       headers: {
         'Content-Type': 'application/json',
       }

@@ -35,7 +35,7 @@ export default function TabelaGastos ({ filtroMesSelecionado, refresh, setRefres
   const [total, setTotal] = React.useState(0);
   
   async function handleDeleteGasto (gasto) {
-    const url = `/gasto/${gasto.id}`;
+    const url = `/gastos/${gasto.id}`;
     window.console.log("DELETE " + url);
     await api.delete(url);
     setRefresh();
@@ -46,7 +46,7 @@ export default function TabelaGastos ({ filtroMesSelecionado, refresh, setRefres
     async function getGastosApi () {
       if (filtroMesSelecionado) {
         const [ano, mes] = filtroMesSelecionado.split("-");
-        const url = `/gasto?ano=${ano}&mes=${mes}`;
+        const url = `/gastos?ano=${ano}&mes=${mes}`;
         const response = await api.get(url);
         
         window.console.log("GET " + url);
