@@ -27,7 +27,7 @@ export default function EnhancedTableHead(props) {
           <TableCell
             key={headCell.id}
             variant="head"
-            align={headCell.align == 'right' ? 'right' : 'left'}
+            align={headCell.align === 'right' ? 'right' : 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
             style={{ minWidth: headCell.minWidth }}
           >

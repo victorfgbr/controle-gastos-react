@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
