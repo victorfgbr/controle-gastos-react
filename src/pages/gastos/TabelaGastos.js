@@ -1,6 +1,29 @@
 import React from 'react';
 import api from '../../services/api';
+
 import TabelaCompleta from '../../components/Tabela/TabelaCompleta';
+
+export default function TabelaGastos ({ gastos }) {
+ 
+  const [total, setTotal] = React.useState(0);
+  
+  const handleDeleteGasto = (gasto) =>  {
+    api.delete(`/gastos/${gasto.id}`);
+  }
+
+  React.useEffect(() => {
+    setTotal(gastos.reduce((total, gasto) => total + gasto.valor, 0));
+  }, [gastos]);
+
+  return (
+    <TabelaCompleta 
+      rows={gastos} 
+      headCells={headCells} 
+      titleTable={'Total: R$ ' + total.toFixed(2)}
+      handleDeleteRow={handleDeleteGasto}
+    />
+  );
+}
 
 const formatData = (value) => {
   const d = new Date(value);
@@ -10,7 +33,7 @@ const formatData = (value) => {
 }
 
 const headCells = [
-  { 
+  {
     id: 'descricao', 
     label: 'Descrição',
     minWidth: 400,
@@ -27,52 +50,3 @@ const headCells = [
     align: 'right',
   },
 ];
-
-export default function TabelaGastos ({ filtroMesSelecionado, refresh, setRefresh }) {
- 
-  const [gastos, setGastos] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  const [total, setTotal] = React.useState(0);
-  
-  async function handleDeleteGasto (gasto) {
-    const url = `/gastos/${gasto.id}`;
-    window.console.log("DELETE " + url);
-    await api.delete(url);
-    setRefresh();
-  }
-
-  React.useEffect(() => {
-    setLoading(true);
-    async function getGastosApi () {
-      if (filtroMesSelecionado) {
-        const [ano, mes] = filtroMesSelecionado.split("-");
-        const url = `/gastos?ano=${ano}&mes=${mes}`;
-        const response = await api.get(url);
-        
-        window.console.log("GET " + url);
-        
-        setGastos(response.data);
-      }
-    }
-    getGastosApi();
-  }, [filtroMesSelecionado, refresh]);
-
-  React.useEffect(() => {
-    setTimeout(() => setLoading(false), 100);
-    setTotal(gastos.reduce((total, gasto) => total + gasto.valor, 0));
-  }, [gastos]);
-
-  return (
-    <div className="tabela-gastos">
-
-      {loading ? (<p>Carregando...</p>) : 
-        (<TabelaCompleta 
-          rows={gastos} 
-          headCells={headCells} 
-          titleTable={'Total: R$ ' + total.toFixed(2)}
-          handleDeleteRow={handleDeleteGasto}
-        />) }
-
-    </div>
-  );
-}
