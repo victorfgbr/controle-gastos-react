@@ -7,13 +7,13 @@ import FormCadastroGasto from './FormCadastroGasto';
 import FiltroMes from './FiltroMes';
 import './style.css';
 
-export default function PaginaGastos ({ usuario }) {
+export default function PaginaGastos () {
 
   const [loading, setLoading] = React.useState(true);
   const [gastos, setGastos] = React.useState([]);
   const [data, setData] = React.useState(null);
 
-  React.useEffect(refreshGastos, [data, usuario]);
+  React.useEffect(refreshGastos, [data]);
 
   function refreshGastos () {
     setLoading(true);
@@ -34,13 +34,13 @@ export default function PaginaGastos ({ usuario }) {
 
   return (
     <div className="pagina-gastos">
-        <FiltroMes setMesSelecionado={setData} usuario={usuario}/>
+        <FiltroMes setMesSelecionado={setData} />
 
         {loading ? (<Carregando />) : 
             ( 
             <div className="container-form-tabela">
+                <TabelaGastos gastos={gastos} refreshTableGastos={refreshGastos}/>
                 <FormCadastroGasto refreshTableGastos={refreshGastos} />
-                <TabelaGastos gastos={gastos}/>
             </div> ) }
 
 

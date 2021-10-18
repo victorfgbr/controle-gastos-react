@@ -3,12 +3,14 @@ import api from '../../services/api';
 
 import TabelaCompleta from '../../components/Tabela/TabelaCompleta';
 
-export default function TabelaGastos ({ gastos }) {
+export default function TabelaGastos ({ gastos, refreshTableGastos }) {
  
   const [total, setTotal] = React.useState(0);
   
   const handleDeleteGasto = (gasto) =>  {
-    api.delete(`/gastos/${gasto.id}`);
+    api.delete(`/gastos/${gasto.id}`)
+          .then((_) => refreshTableGastos())
+          .catch((res) => alert(res));
   }
 
   React.useEffect(() => {

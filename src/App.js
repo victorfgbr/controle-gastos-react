@@ -3,7 +3,8 @@ import React from 'react';
 import Header from './components/Header';
 import PaginaGastos from './pages/gastos/PaginaGastos'
 
-function App() {
+export default function App() {
+
   return (
     <div className="App">
       <Header />
@@ -15,5 +16,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
